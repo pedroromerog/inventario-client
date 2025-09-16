@@ -1,0 +1,31 @@
+<div class="flex flex-col {{ class }}">
+    <label class="{{ labelClass }} mb-2 font-bold" *ngIf="label">
+        {{ label
+        }}<em
+            *ngIf="required || formControlInput.hasValidator(requiredValidator)"
+            >*</em
+        >
+    </label>
+    <p-selectbutton
+        [options]="transformedOptions"
+        [formControl]="formControlInput"
+        optionLabel="{{ optionLabel }}"
+        optionValue="{{ optionValue }}"
+        aria-labelledby="basic"
+        class="h-12"
+        [unselectable]="true"
+        [allowEmpty]="allowEmpty"
+    />
+    <div
+        *ngIf="
+            formControlInput.invalid &&
+            (formControlInput.dirty || formControlInput.touched) &&
+            showError
+        "
+        class="min-h-4"
+    >
+        <app-input-errors
+            [formControlInput]="formControlInput"
+        ></app-input-errors>
+    </div>
+</div>

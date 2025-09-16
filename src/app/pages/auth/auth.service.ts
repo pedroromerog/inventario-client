@@ -10,6 +10,21 @@ export class AuthService {
     constructor() {}
 
     login(data: { username: string; password: string }) {
-        return this.http.post(`${this.api}/auth/login`, data, { withCredentials: true });
+        return this.http.post(`${this.api}/auth/login`, data, {
+            withCredentials: true,
+        });
+    }
+
+    /**
+     * Logout the current user, removing the authentication cookie.
+     */
+    logout() {
+        return this.http.post(
+            `${this.api}/auth/logout`,
+            {},
+            {
+                withCredentials: true,
+            },
+        );
     }
 }

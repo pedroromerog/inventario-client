@@ -1,0 +1,32 @@
+export interface Producto {
+    id: number;
+    codigo: string;
+    nombre: string;
+    descripcion: string;
+    tipo: string;
+    estado: string;
+    unidadMedida: string;
+    categoriaId: number;
+    proveedorId: number;
+    precioCompra: number;
+    precioVenta: number;
+    precioPromedio: number;
+    stockMinimo: number;
+    stockMaximo: number;
+    marca: number;
+    modelo: number;
+    color: number;
+    dimensiones: number;
+    peso: number;
+    especificaciones: string;
+    instrucciones: string;
+    notas: string;
+    requiereRefrigeracion: boolean;
+    esFragil: boolean;
+    esPeligroso: boolean;
+    diasVidaUtil: string;
+    imagenUrl: string;
+    is_active: string;
+    created_at: Date;
+    updated_at: Date;
+}

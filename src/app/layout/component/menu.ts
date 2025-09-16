@@ -26,7 +26,18 @@ export const menu: { [x: string]: MenuItem[] } = {
                 {
                     label: 'Proveedores',
                     icon: 'pi pi-fw pi-shopping-cart',
-                    routerLink: '/ventas'
+                    items: [
+                        {
+                            label: 'Proveedores',
+                            icon: 'pi pi-fw pi-users',
+                            routerLink: '/proveedores'
+                        },
+                        {
+                            label: 'Crear Proveedor',
+                            icon: 'pi pi-fw pi-shopping-cart',
+                            routerLink: '/proveedores/add'
+                        }
+                    ]
                 }
             ]
         },

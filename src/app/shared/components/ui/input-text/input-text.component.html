@@ -1,0 +1,45 @@
+<div class="flex flex-col {{ class }}">
+    <label
+        *ngIf="label"
+        [ngStyle]="{ color: textColor }"
+        [for]="inputId"
+        class="{{ labelClass }} mb-2 font-bold"
+    >
+        {{ label
+        }}<em
+            *ngIf="required || formControlInput.hasValidator(requiredValidator)"
+            >*</em
+        >
+    </label>
+
+    <input
+        pInputText
+        class="h-12"
+        appTrimInput
+        [id]="inputId"
+        [fluid]="fluid"
+        [placeholder]="placeholder ? placeholder : ''"
+        [formControl]="formControlInput"
+        [min]="min ? min : null"
+        [max]="max ? max : null"
+        [ngClass]="{
+            error:
+                formControlInput.invalid &&
+                (formControlInput.dirty || formControlInput.touched),
+        }"
+        [readonly]="readonly"
+        (input)="onInput($event)"
+    />
+    <div
+        *ngIf="
+            formControlInput.invalid &&
+            (formControlInput.dirty || formControlInput.touched) &&
+            showError
+        "
+        class="max-h-4"
+    >
+        <app-input-errors
+            [formControlInput]="formControlInput"
+        ></app-input-errors>
+    </div>
+</div>

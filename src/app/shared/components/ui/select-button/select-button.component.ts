@@ -1,0 +1,79 @@
+import { CommonModule } from '@angular/common';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    SimpleChanges,
+} from '@angular/core';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { InputErrorsComponent } from '../input-errors/input-errors.component';
+@Component({
+    selector: 'app-select-button',
+    templateUrl: './select-button.component.html',
+    styleUrls: ['./select-button.component.css'],
+    standalone: true,
+    imports: [
+        CommonModule,
+        SelectButtonModule,
+        ReactiveFormsModule,
+        InputErrorsComponent,
+    ],
+})
+export class SelectButtonComponent implements OnInit {
+    transformedOptions: any[] = [];
+    @Output() selectionChange = new EventEmitter<any>();
+
+    @Input() options: any[] = [];
+    @Input() formControlInput!: FormControl;
+    @Input() label = '';
+    @Input() class = '';
+    @Input() styleClass = '';
+    @Input() required = false;
+    @Input() editable = false;
+    @Input() optionLabel = 'nombre';
+    @Input() optionValue = 'id';
+    @Input() placeholder = 'Escoger';
+    @Input() filter = false;
+    @Input() labelClass = '';
+    @Input() readonly = true;
+    @Input() showError = true;
+    @Input() allowEmpty = true;
+
+    requiredValidator = Validators.required;
+
+    @Output() valueChange = new EventEmitter<any>();
+    constructor() {}
+
+    ngOnInit() {
+        this.transformOptions();
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['options']) {
+            this.transformOptions();
+        }
+    }
+
+    transformOptions() {
+        this.transformedOptions = this.options?.map((option) => {
+            if (typeof option === 'string') {
+                return {
+                    [this.optionLabel]: option,
+                    [this.optionValue]: option,
+                };
+            } else {
+                return option;
+            }
+        });
+    }
+    onSelectionChange(event: any) {
+        this.selectionChange.emit(event.value);
+        const selectedOption = this.transformedOptions.find(
+            (option) => option[this.optionValue] === event.value,
+        );
+        this.formControlInput.setValue(selectedOption[this.optionValue]);
+    }
+}

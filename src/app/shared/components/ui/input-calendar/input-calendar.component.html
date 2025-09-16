@@ -1,0 +1,48 @@
+<div class="flex flex-col {{ class }} font-semibold">
+    <label
+        *ngIf="label"
+        [ngStyle]="{ color: textColor }"
+        [for]="inputId"
+        class="{{ labelClass }} mb-2"
+    >
+        {{ label }}<em *ngIf="required">*</em>
+    </label>
+
+    <p-datepicker
+        [formControl]="formControlInput"
+        [id]="inputId"
+        [placeholder]="placeholder ? placeholder : ''"
+        [dateFormat]="dateFormat ? dateFormat : 'dd/mm/yy'"
+        [showTime]="showTime ? showTime : false"
+        [style]="{ width: '100%' }"
+        [minDate]="minDate ? minDate : null"
+        [maxDate]="maxDate ? maxDate : null"
+        appendTo="body"
+        [selectionMode]="selectionMode"
+        styleClass="h-12"
+        [showButtonBar]="true"
+        [fluid]="fluid"
+        [disabled]="disable"
+        [ngClass]="{
+            error:
+                formControlInput.invalid &&
+                (formControlInput.dirty || formControlInput.touched),
+        }"
+        class="w-full"
+        [iconDisplay]="'input'"
+        [showIcon]="true"
+    />
+
+    <div
+        *ngIf="
+            formControlInput.invalid &&
+            (formControlInput.dirty || formControlInput.touched) &&
+            showError
+        "
+        class="min-h-4"
+    >
+        <app-input-errors
+            [formControlInput]="formControlInput"
+        ></app-input-errors>
+    </div>
+</div>

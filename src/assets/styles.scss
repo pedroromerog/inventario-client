@@ -3,3 +3,9 @@
 @use './layout/layout.scss';
 @use 'primeicons/primeicons.css';
 @use './demo/demo.scss';
+
+em {
+    font-style: normal;
+    font-weight: bold;
+    color: #ff4081;
+}

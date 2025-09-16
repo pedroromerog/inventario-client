@@ -1,0 +1,38 @@
+<div class="flex flex-col {{ class }}">
+    <label
+        [ngStyle]="{ color: textColor }"
+        [for]="inputId"
+        class="{{ labelClass }} mb-2 font-semibold"
+    >
+        {{ label }}<em *ngIf="required">*</em>
+    </label>
+
+    <textarea
+        pTextarea
+        pInputText
+        appTrimInput
+        [id]="inputId"
+        [placeholder]="placeholder ? placeholder : ''"
+        [formControl]="formControlInput"
+        [ngClass]="{
+            error:
+                formControlInput.invalid &&
+                (formControlInput.dirty || formControlInput.touched),
+        }"
+        [readonly]="readonly"
+        [rows]="rows"
+        (input)="onInput($event)"
+    ></textarea>
+    <div
+        *ngIf="
+            formControlInput.invalid &&
+            (formControlInput.dirty || formControlInput.touched) &&
+            showError
+        "
+        class="max-h-4"
+    >
+        <app-input-errors
+            [formControlInput]="formControlInput"
+        ></app-input-errors>
+    </div>
+</div>
