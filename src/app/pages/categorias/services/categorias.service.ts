@@ -35,7 +35,7 @@ export class CategoriasService {
     }
 
     delete(id: number) {
-        return this.http.delete(`${this.api}</${id}`, {
+        return this.http.delete(`${this.api}/${id}`, {
             withCredentials: true,
         });
     }
