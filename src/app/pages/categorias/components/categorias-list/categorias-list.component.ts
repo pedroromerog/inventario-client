@@ -1,4 +1,7 @@
+import { ButtonDeleteComponent } from '@/shared/components/ui/button-delete/button-delete.component';
+import { ButtonEditComponent } from '@/shared/components/ui/button-edit/button-edit.component';
 import { ButtonComponent } from '@/shared/components/ui/button/button.component';
+import { EstadoCategoria, TipoCategoria } from '@/shared/enums/categoria.enums';
 import { ToastService } from '@/shared/services/toast.service';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
@@ -8,7 +11,7 @@ import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { Categoria } from '../../interfaces/categorias.interface';
 import { CategoriasService } from '../../services/categorias.service';
-import { EstadoCategoria, TipoCategoria } from '@/shared/enums/categoria.enums';
+import { ButtonViewComponent } from '@/shared/components/ui/button-view/button-view.component';
 
 @Component({
     selector: 'app-categorias-list',
@@ -88,30 +91,15 @@ import { EstadoCategoria, TipoCategoria } from '@/shared/enums/categoria.enums';
                                 ></p-tag>
                             </td>
                             <td class="flex justify-center space-x-2">
-                                <app-button
-                                    [text]="true"
-                                    [rounded]="true"
-                                    severity="info"
-                                    icon="pi pi-eye"
-                                    pTooltip="Ver detalles"
+                                <app-button-view
                                     [routerLink]="'view/' + categoria.id"
-                                ></app-button>
-                                <app-button
-                                    [text]="true"
-                                    [rounded]="true"
-                                    severity="warn"
-                                    icon="pi pi-pencil"
-                                    pTooltip="Editar"
+                                ></app-button-view>
+                                <app-button-edit
                                     [routerLink]="'edit/' + categoria.id"
-                                ></app-button>
-                                <app-button
-                                    [text]="true"
-                                    [rounded]="true"
-                                    severity="danger"
-                                    icon="pi pi-trash"
-                                    pTooltip="Eliminar"
+                                ></app-button-edit>
+                                <app-button-delete
                                     (clicked)="onDelete(categoria.id)"
-                                ></app-button>
+                                ></app-button-delete>
                             </td>
                         </tr>
                     </ng-template>
@@ -152,27 +140,15 @@ import { EstadoCategoria, TipoCategoria } from '@/shared/enums/categoria.enums';
                         <p><strong>Orden:</strong> {{ categoria.orden }}</p>
                     </div>
                     <div class="flex justify-end mt-4 space-x-2">
-                        <app-button
-                            [text]="true"
-                            [rounded]="true"
-                            severity="info"
-                            icon="pi pi-eye"
+                        <app-button-view
                             [routerLink]="'view/' + categoria.id"
-                        ></app-button>
-                        <app-button
-                            [text]="true"
-                            [rounded]="true"
-                            severity="warn"
-                            icon="pi pi-pencil"
+                        ></app-button-view>
+                        <app-button-edit
                             [routerLink]="'edit/' + categoria.id"
-                        ></app-button>
-                        <app-button
-                            [text]="true"
-                            [rounded]="true"
-                            severity="danger"
-                            icon="pi pi-trash"
+                        ></app-button-edit>
+                        <app-button-delete
                             (clicked)="onDelete(categoria.id)"
-                        ></app-button>
+                        ></app-button-delete>
                     </div>
                 </div>
             </div>
@@ -185,6 +161,9 @@ import { EstadoCategoria, TipoCategoria } from '@/shared/enums/categoria.enums';
         TagModule,
         RouterModule,
         CommonModule,
+        ButtonEditComponent,
+        ButtonDeleteComponent,
+        ButtonViewComponent,
     ],
     providers: [ToastService],
 })

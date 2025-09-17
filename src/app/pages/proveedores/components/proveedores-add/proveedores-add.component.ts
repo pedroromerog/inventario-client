@@ -21,6 +21,7 @@ import { ConfirmationService } from 'primeng/api';
 import { Proveedor } from '../../interfaces/proveedor.interface';
 import { ProveedoresService } from '../../services/proveedores.service';
 import { TextAreaComponent } from '@/shared/components/ui/text-area/text-area.component';
+import { ButtonCancelComponent } from '@/shared/components/ui/button-cancel/button-cancel.component';
 
 @Component({
     selector: 'app-proveedores-add',
@@ -136,13 +137,7 @@ import { TextAreaComponent } from '@/shared/components/ui/text-area/text-area.co
                 </div>
             </div>
             <div class="mt-4 flex justify-end gap-4">
-                <app-button
-                    label="Cancelar"
-                    icon="pi pi-times"
-                    [severity]="'secondary'"
-                    [raised]="true"
-                    (clicked)="onCancel()"
-                />
+                <app-button-cancel (clicked)="onCancel()" />
                 <app-button
                     label="Guardar"
                     icon="pi pi-check            
@@ -164,6 +159,7 @@ import { TextAreaComponent } from '@/shared/components/ui/text-area/text-area.co
         SelectButtonComponent,
         RouterModule,
         TextAreaComponent,
+        ButtonCancelComponent,
     ],
     providers: [ToastService],
 })

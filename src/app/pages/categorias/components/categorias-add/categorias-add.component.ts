@@ -23,6 +23,7 @@ import { Checkbox } from 'primeng/checkbox';
 import { Categoria } from '../../interfaces/categorias.interface';
 import { CategoriasService } from '../../services/categorias.service';
 import { ColorPickerComponent } from '@/shared/components/ui/color-picker/color-picker.component';
+import { ButtonCancelComponent } from '@/shared/components/ui/button-cancel/button-cancel.component';
 
 @Component({
     selector: 'app-categorias-add',
@@ -67,19 +68,6 @@ import { ColorPickerComponent } from '@/shared/components/ui/color-picker/color-
                         [formControlInput]="$any(form.get('color'))"
                         placeholder="Ej: #FF5733"
                     />
-                    <!-- <div class="flex items-center space-x-2">
-                        <p-checkbox
-                            formControlName="isActive"
-                            binary="true"
-                            inputId="isActive"
-                        />
-                        <label
-                            for="isActive"
-                            class="text-sm font-medium text-gray-700"
-                        >
-                            ¿Categoría Activa?
-                        </label>
-                    </div> -->
                 </div>
 
                 <div>
@@ -97,12 +85,7 @@ import { ColorPickerComponent } from '@/shared/components/ui/color-picker/color-
                 </div>
 
                 <div class="pt-6 flex justify-end space-x-4">
-                    <app-button
-                        [severity]="'secondary'"
-                        [raised]="true"
-                        label="Cancelar"
-                        (click)="onCancel()"
-                    ></app-button>
+                    <app-button-cancel (clicked)="onCancel()" />
                     <app-button
                         [severity]="'primary'"
                         [raised]="true"
@@ -126,6 +109,7 @@ import { ColorPickerComponent } from '@/shared/components/ui/color-picker/color-
         InputNumberComponent,
         ReactiveFormsModule,
         ColorPickerComponent,
+        ButtonCancelComponent,
     ],
 })
 export class CategoriasAddComponent implements OnInit {

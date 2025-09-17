@@ -26,6 +26,7 @@ import { ConfirmationService } from 'primeng/api';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ProductosService } from '../../services/productos.service';
 import { CheckboxComponent } from '@/shared/components/ui/checkbox/checkbox.component';
+import { ButtonCancelComponent } from '@/shared/components/ui/button-cancel/button-cancel.component';
 
 @Component({
     selector: 'app-producto-add',
@@ -173,12 +174,7 @@ import { CheckboxComponent } from '@/shared/components/ui/checkbox/checkbox.comp
                 </div>
 
                 <div class="pt-6 flex justify-end space-x-4">
-                    <app-button
-                        label="Cancelar"
-                        [severity]="'secondary'"
-                        [raised]="true"
-                        (click)="onCancel()"
-                    ></app-button>
+                    <app-button-cancel (clicked)="onCancel()" />
                     <app-button
                         label="{{
                             productoId ? 'Actualizar ' : 'Crear'
@@ -189,8 +185,6 @@ import { CheckboxComponent } from '@/shared/components/ui/checkbox/checkbox.comp
                     ></app-button>
                 </div>
             </form>
-
-            {{ form.value | json }}
         </div>
     `,
     styles: [],
@@ -204,6 +198,7 @@ import { CheckboxComponent } from '@/shared/components/ui/checkbox/checkbox.comp
         CheckboxModule,
         ButtonComponent,
         CheckboxComponent,
+        ButtonCancelComponent,
     ],
     providers: [ToastService],
 })
@@ -322,8 +317,12 @@ export class ProductoAddComponent implements OnInit {
                 console.log(res);
                 this.form.patchValue({
                     ...res,
-                    precioCompra: parseFloat(res.precioCompra as any),
-                    precioVenta: parseFloat(res.precioVenta as any),
+                    precioCompra: res.precioCompra
+                        ? parseFloat(res.precioCompra as any)
+                        : null,
+                    precioVenta: res.precioCompra
+                        ? parseFloat(res.precioVenta as any)
+                        : null,
                     stockMinimo: parseFloat(res.stockMinimo as any),
                     stockMaximo: parseFloat(res.stockMaximo as any),
                 });

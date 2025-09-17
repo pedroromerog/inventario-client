@@ -1,3 +1,7 @@
+import { ButtonDeleteComponent } from '@/shared/components/ui/button-delete/button-delete.component';
+import { ButtonEditComponent } from '@/shared/components/ui/button-edit/button-edit.component';
+import { ButtonViewComponent } from '@/shared/components/ui/button-view/button-view.component';
+import { ButtonComponent } from '@/shared/components/ui/button/button.component';
 import {
     EstadoMovimiento,
     TipoMovimiento,
@@ -5,6 +9,7 @@ import {
 import { ToastService } from '@/shared/services/toast.service';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
@@ -12,8 +17,6 @@ import { TagModule } from 'primeng/tag';
 import { TooltipModule } from 'primeng/tooltip';
 import { Movimiento } from '../../interfaces/movimiento.interface';
 import { MovimientosService } from '../../services/movimientos.service';
-import { RouterModule } from '@angular/router';
-import { ButtonComponent } from '@/shared/components/ui/button/button.component';
 
 @Component({
     selector: 'app-movimientos-list',
@@ -25,6 +28,9 @@ import { ButtonComponent } from '@/shared/components/ui/button/button.component'
         CommonModule,
         RouterModule,
         ButtonComponent,
+        ButtonViewComponent,
+        ButtonDeleteComponent,
+        ButtonEditComponent,
     ],
     template: `
         <div class="p-6">
@@ -96,28 +102,13 @@ import { ButtonComponent } from '@/shared/components/ui/button/button.component'
                                 }}
                             </td>
                             <td class="flex justify-center space-x-2">
-                                <app-button
-                                    [text]="true"
-                                    [rounded]="true"
-                                    severity="info"
-                                    icon="pi pi-eye"
-                                    pTooltip="Ver Detalles"
-                                ></app-button>
-                                <app-button
-                                    [text]="true"
-                                    [rounded]="true"
-                                    severity="warn"
-                                    icon="pi pi-pencil"
-                                    pTooltip="Editar"
-                                ></app-button>
-                                <app-button
-                                    [text]="true"
-                                    [rounded]="true"
-                                    severity="danger"
-                                    pButton
-                                    icon="pi pi-trash"
-                                    pTooltip="Eliminar"
-                                ></app-button>
+                                <app-button-view />
+                                <app-button-edit
+                                    [routerLink]="'edit/' + movimiento.id"
+                                />
+                                <app-button-delete
+                                    (clicked)="onDelete(movimiento.id)"
+                                />
                             </td>
                         </tr>
                     </ng-template>
@@ -159,18 +150,13 @@ import { ButtonComponent } from '@/shared/components/ui/button/button.component'
                         </p>
                     </div>
                     <div class="flex justify-end mt-4 space-x-2">
-                        <app-button
-                            icon="pi pi-eye"
-                            class="p-button-sm p-button-rounded p-button-text p-button-info"
-                        ></app-button>
-                        <app-button
-                            icon="pi pi-pencil"
-                            class="p-button-sm p-button-rounded p-button-text p-button-warning"
-                        ></app-button>
-                        <app-button
-                            icon="pi pi-trash"
-                            class="p-button-sm p-button-rounded p-button-text p-button-danger"
-                        ></app-button>
+                        <app-button-view />
+                        <app-button-edit
+                            [routerLink]="'edit/' + movimiento.id"
+                        />
+                        <app-button-delete
+                            (clicked)="onDelete(movimiento.id)"
+                        />
                     </div>
                 </div>
             </div>

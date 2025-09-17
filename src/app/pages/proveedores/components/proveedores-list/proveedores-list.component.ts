@@ -8,6 +8,8 @@ import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { Proveedor } from '../../interfaces/proveedor.interface';
 import { ProveedoresService } from '../../services/proveedores.service';
+import { ButtonEditComponent } from '@/shared/components/ui/button-edit/button-edit.component';
+import { ButtonDeleteComponent } from '@/shared/components/ui/button-delete/button-delete.component';
 
 @Component({
     selector: 'app-proveedores-list',
@@ -150,20 +152,12 @@ import { ProveedoresService } from '../../services/proveedores.service';
                             </p>
                         </div>
                         <div class="flex justify-end mt-4 space-x-2">
-                            <app-button
-                                [text]="true"
-                                [rounded]="true"
-                                severity="warn"
-                                icon="pi pi-pencil"
-                                routerLink="edit/{{ proveedor.id }}"
-                            ></app-button>
-                            <app-button
-                                [text]="true"
-                                [rounded]="true"
-                                severity="danger"
-                                icon="pi pi-trash"
+                            <app-button-edit
+                                [routerLink]="'edit/' + proveedor.id"
+                            ></app-button-edit>
+                            <app-button-delete
                                 (clicked)="onDelete(proveedor.id)"
-                            ></app-button>
+                            ></app-button-delete>
                         </div>
                     </div>
                 </div>
@@ -177,6 +171,8 @@ import { ProveedoresService } from '../../services/proveedores.service';
         TagModule,
         ButtonComponent,
         RouterModule,
+        ButtonEditComponent,
+        ButtonDeleteComponent,
     ],
     providers: [ToastService],
 })

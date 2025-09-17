@@ -9,6 +9,9 @@ import { TableModule } from 'primeng/table';
 import { RouterModule } from '@angular/router';
 import { TagModule } from 'primeng/tag';
 import { EstadoProducto, TipoProducto } from '@/shared/enums/producto.enums';
+import { ButtonDeleteComponent } from '@/shared/components/ui/button-delete/button-delete.component';
+import { ButtonViewComponent } from '@/shared/components/ui/button-view/button-view.component';
+import { ButtonEditComponent } from '@/shared/components/ui/button-edit/button-edit.component';
 
 @Component({
     selector: 'app-productos-list',
@@ -81,30 +84,15 @@ import { EstadoProducto, TipoProducto } from '@/shared/enums/producto.enums';
                                 ></p-tag>
                             </td>
                             <td class="flex justify-center space-x-2">
-                                <app-button
-                                    [text]="true"
-                                    [rounded]="true"
-                                    severity="info"
-                                    icon="pi pi-eye"
-                                    pTooltip="Ver detalles"
+                                <app-button-view
                                     [routerLink]="'view/' + producto.id"
-                                ></app-button>
-                                <app-button
-                                    [text]="true"
-                                    [rounded]="true"
-                                    severity="warn"
-                                    icon="pi pi-pencil"
-                                    pTooltip="Editar"
+                                />
+                                <app-button-edit
                                     [routerLink]="'edit/' + producto.id"
-                                ></app-button>
-                                <app-button
-                                    [text]="true"
-                                    [rounded]="true"
-                                    severity="danger"
-                                    icon="pi pi-trash"
-                                    pTooltip="Eliminar"
+                                />
+                                <app-button-delete
                                     (clicked)="onDelete(producto.id)"
-                                ></app-button>
+                                />
                             </td>
                         </tr>
                     </ng-template>
@@ -140,27 +128,9 @@ import { EstadoProducto, TipoProducto } from '@/shared/enums/producto.enums';
                         </p>
                     </div>
                     <div class="flex justify-end mt-4 space-x-2">
-                        <app-button
-                            [text]="true"
-                            [rounded]="true"
-                            severity="info"
-                            icon="pi pi-eye"
-                            [routerLink]="'view/' + producto.id"
-                        ></app-button>
-                        <app-button
-                            [text]="true"
-                            [rounded]="true"
-                            severity="warn"
-                            icon="pi pi-pencil"
-                            [routerLink]="'edit/' + producto.id"
-                        ></app-button>
-                        <app-button
-                            [text]="true"
-                            [rounded]="true"
-                            severity="danger"
-                            icon="pi pi-trash"
-                            (clicked)="onDelete(producto.id)"
-                        ></app-button>
+                        <app-button-view [routerLink]="'view/' + producto.id" />
+                        <app-button-edit [routerLink]="'edit/' + producto.id" />
+                        <app-button-delete (clicked)="onDelete(producto.id)" />
                     </div>
                 </div>
             </div>
@@ -173,6 +143,9 @@ import { EstadoProducto, TipoProducto } from '@/shared/enums/producto.enums';
         TableModule,
         RouterModule,
         TagModule,
+        ButtonDeleteComponent,
+        ButtonViewComponent,
+        ButtonEditComponent,
     ],
     providers: [ToastService],
 })
