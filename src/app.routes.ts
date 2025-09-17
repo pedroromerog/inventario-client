@@ -18,7 +18,11 @@ export const appRoutes: Routes = [
                 loadChildren: () =>
                     import('./app/pages/productos/productos.routes'),
             },
-
+            {
+                path: 'categorias',
+                loadChildren: () =>
+                    import('./app/pages/categorias/categorias.routes'),
+            },
             {
                 path: 'movimientos',
                 loadChildren: () =>
