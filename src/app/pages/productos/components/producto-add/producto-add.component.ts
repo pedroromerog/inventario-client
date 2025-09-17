@@ -25,6 +25,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ProductosService } from '../../services/productos.service';
+import { CheckboxComponent } from '@/shared/components/ui/checkbox/checkbox.component';
 
 @Component({
     selector: 'app-producto-add',
@@ -144,48 +145,25 @@ import { ProductosService } from '../../services/productos.service';
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-                    <div class="flex items-center space-x-4">
-                        <label
-                            for="requiereRefrigeracion"
-                            class="text-sm font-medium text-gray-700"
-                        >
-                            ¿Requiere refrigeración?
-                        </label>
-                        <p-checkbox
-                            formControlName="requiereRefrigeracion"
-                            binary="true"
-                            inputId="requiereRefrigeracion"
-                        />
-                    </div>
-                    <div class="flex items-center space-x-4">
-                        <label
-                            for="esFragil"
-                            class="text-sm font-medium text-gray-700"
-                        >
-                            ¿Es frágil?
-                        </label>
-                        <p-checkbox
-                            formControlName="esFragil"
-                            binary="true"
-                            inputId="esFragil"
-                        />
-                    </div>
+                    <app-checkbox
+                        label=" ¿Requiere refrigeración?"
+                        [formControlInput]="
+                            $any(form.get('requiereRefrigeracion'))
+                        "
+                    />
+
+                    <app-checkbox
+                        label="¿Es frágil?"
+                        [formControlInput]="$any(form.get('esFragil'))"
+                    />
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-                    <div class="flex items-center space-x-4">
-                        <label
-                            for="esPeligroso"
-                            class="text-sm font-medium text-gray-700"
-                        >
-                            ¿Es peligroso?
-                        </label>
-                        <p-checkbox
-                            formControlName="esPeligroso"
-                            binary="true"
-                            inputId="esPeligroso"
-                        />
-                    </div>
+                    <app-checkbox
+                        label="¿Es peligroso?"
+                        [formControlInput]="$any(form.get('esPeligroso'))"
+                    />
+
                     <div>
                         <app-input-number
                             label="Días de Vida Útil"
@@ -211,6 +189,8 @@ import { ProductosService } from '../../services/productos.service';
                     ></app-button>
                 </div>
             </form>
+
+            {{ form.value | json }}
         </div>
     `,
     styles: [],
@@ -223,6 +203,7 @@ import { ProductosService } from '../../services/productos.service';
         TextAreaComponent,
         CheckboxModule,
         ButtonComponent,
+        CheckboxComponent,
     ],
     providers: [ToastService],
 })
