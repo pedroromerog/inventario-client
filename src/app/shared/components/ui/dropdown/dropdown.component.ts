@@ -39,14 +39,14 @@ export class DropdownComponent implements OnInit, OnChanges {
     @Input() showClear = false;
     @Input() lazy = false;
     @Input() editable = false;
-    @Input() optionLabel = 'name';
+    @Input() optionLabel = 'nombre';
     @Input() optionValue = 'id';
     @Input() placeholder = 'Selecciona una opción';
     @Input() filter = false;
     @Input() labelClass = '';
     @Input() readonly = true;
     @Input() showError = true;
-    @Input() filterBy = 'name';
+    @Input() filterBy = 'nombre';
 
     @Output() valueChange = new EventEmitter<any>();
     constructor() {}

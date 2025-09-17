@@ -2,9 +2,13 @@
     <label
         [ngStyle]="{ color: textColor }"
         [for]="inputId"
-        class="{{ labelClass }} mb-2 font-semibold"
+        class="{{ labelClass }} mb-1 text-sm font-medium"
     >
-        {{ label }}<em *ngIf="required">*</em>
+        {{ label
+        }}<em
+            *ngIf="required || formControlInput.hasValidator(requiredValidator)"
+            >*</em
+        >
     </label>
 
     <textarea
@@ -21,6 +25,10 @@
         }"
         [readonly]="readonly"
         [rows]="rows"
+        [invalid]="
+            formControlInput.invalid &&
+            (formControlInput.dirty || formControlInput.touched)
+        "
         (input)="onInput($event)"
     ></textarea>
     <div

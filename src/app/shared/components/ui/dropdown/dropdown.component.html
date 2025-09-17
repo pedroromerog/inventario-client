@@ -1,5 +1,5 @@
 <div class="flex flex-col {{ class }}">
-    <label class="{{ labelClass }} mb-2 font-bold" *ngIf="label">
+    <label class="{{ labelClass }} mb-1 text-sm font-medium" *ngIf="label">
         {{ label
         }}<em
             *ngIf="required || formControlInput.hasValidator(requiredValidator)"
@@ -9,7 +9,7 @@
     <p-select
         [options]="transformedOptions"
         [formControl]="formControlInput"
-        class="h-12"
+        class="h-10"
         optionLabel="{{ optionLabel }}"
         optionValue="{{ optionValue }}"
         [filter]="filter"
@@ -19,6 +19,10 @@
         [placeholder]="placeholder"
         [virtualScroll]="lazy"
         [fluid]="fluid"
+        [invalid]="
+            formControlInput.invalid &&
+            (formControlInput.dirty || formControlInput.touched)
+        "
         [virtualScrollItemSize]="38"
         appendTo="body"
         styleClass="custom-dropdown {{ styleClass }} w-full"

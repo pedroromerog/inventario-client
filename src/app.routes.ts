@@ -10,9 +10,20 @@ export const appRoutes: Routes = [
             { path: '', component: Dashboard },
             {
                 path: 'proveedores',
-                loadChildren: () => import('./app/pages/proveedores/proveedores.routes')
-            }
-        ]
+                loadChildren: () =>
+                    import('./app/pages/proveedores/proveedores.routes'),
+            },
+            {
+                path: 'movimientos',
+                loadChildren: () =>
+                    import(
+                        './app/pages/movimientos-inventario/movientos.routes'
+                    ),
+            },
+        ],
     },
-    { path: 'auth', loadChildren: () => import('./app/pages/auth/auth.routes') }
+    {
+        path: 'auth',
+        loadChildren: () => import('./app/pages/auth/auth.routes'),
+    },
 ];

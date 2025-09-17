@@ -3,7 +3,7 @@
         *ngIf="label"
         [ngStyle]="{ color: textColor }"
         [for]="inputId"
-        class="{{ labelClass }} mb-2 font-bold"
+        class="{{ labelClass }} text-sm font-medium mb-1"
     >
         {{ label
         }}<em
@@ -14,7 +14,7 @@
 
     <input
         pInputText
-        class="h-12"
+        class="h-10 shadow-sm"
         appTrimInput
         [id]="inputId"
         [fluid]="fluid"
@@ -22,11 +22,10 @@
         [formControl]="formControlInput"
         [min]="min ? min : null"
         [max]="max ? max : null"
-        [ngClass]="{
-            error:
-                formControlInput.invalid &&
-                (formControlInput.dirty || formControlInput.touched),
-        }"
+        [invalid]="
+            formControlInput.invalid &&
+            (formControlInput.dirty || formControlInput.touched)
+        "
         [readonly]="readonly"
         (input)="onInput($event)"
     />

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TextareaModule } from 'primeng/textarea';
 import { InputErrorsComponent } from '../input-errors/input-errors.component';
 @Component({
@@ -35,6 +35,8 @@ export class TextAreaComponent implements OnInit {
     @Input() disabled = false;
     visible = true;
     changetype = false;
+
+    requiredValidator = Validators.required;
 
     constructor() {}
 

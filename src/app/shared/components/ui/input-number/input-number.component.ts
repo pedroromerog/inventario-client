@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputNumber, InputNumberModule } from 'primeng/inputnumber';
 import { InputErrorsComponent } from '../input-errors/input-errors.component';
 
@@ -29,14 +29,16 @@ export class InputNumberComponent implements OnInit {
     @Input() showButtons = true;
     @Input() buttonLayout: InputNumber['buttonLayout'] = 'stacked';
     @Input() value!: string | number;
-    @Input() max: null | number = null;
-    @Input() min: null | number = null;
+    @Input() max!: number;
+    @Input() min!: number;
     @Input() maxLength!: number;
     @Input() minLength!: number;
     @Input() textColor: 'white' | '' = '';
     @Input() showError = true;
     @Input() mode = '';
     visible = true;
+
+    requiredValidator = Validators.required;
 
     // constructor() {}
 

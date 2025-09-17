@@ -3,24 +3,30 @@
         *ngIf="label"
         [ngStyle]="{ color: textColor }"
         [for]="inputId"
-        class="{{ labelClass }} mb-2 font-bold"
-        >{{ label }}<em *ngIf="required">*</em></label
+        class="{{ labelClass }} mb-1 text-sm font-medium"
+        >{{ label
+        }}<em
+            *ngIf="required || formControlInput.hasValidator(requiredValidator)"
+            >*</em
+        ></label
     >
 
     <!-- styleClass="w-full" -->
     <p-inputNumber
         [id]="inputId"
-        class="h-12"
+        class="h-10"
         [placeholder]="placeholder ? placeholder : ''"
         [formControl]="formControlInput"
-        [min]="min ?? null"
-        [max]="max ?? null"
+        [min]="min"
+        [max]="max"
         [showButtons]="true"
         [buttonLayout]="buttonLayout"
-        [incrementButtonIcon]="'pi pi-plus'"
-        [decrementButtonIcon]="'pi pi-minus'"
         [showButtons]="showButtons"
         styleClass="w-min-10"
+        [invalid]="
+            formControlInput.invalid &&
+            (formControlInput.dirty || formControlInput.touched)
+        "
         [fluid]="true"
         [ngClass]="{
             error:

@@ -20,128 +20,138 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { Proveedor } from '../../interfaces/proveedor.interface';
 import { ProveedoresService } from '../../services/proveedores.service';
+import { TextAreaComponent } from '@/shared/components/ui/text-area/text-area.component';
 
 @Component({
     selector: 'app-proveedores-add',
     template: `
-        <div class="flex justify-between">
-            <app-header-title
-                title="{{
-                    proveedorId ? 'Actualizar Proveedor' : 'Crear Proveedor'
-                }}"
-            />
-            @if (proveedorId) {
+        <div class="max-w-4xl mx-auto ">
+            <div class="flex justify-between">
+                <app-header-title
+                    title="{{
+                        proveedorId ? 'Actualizar Proveedor' : 'Crear Proveedor'
+                    }}"
+                />
+                @if (proveedorId) {
+                    <app-button
+                        label="Eliminar"
+                        icon="pi pi-trash"
+                        class="p-button-outlined"
+                        [severity]="'danger'"
+                        (clicked)="onDelete()"
+                    />
+                }
+            </div>
+            <div class="card">
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
+                >
+                    <app-input-text
+                        label="Código"
+                        [formControlInput]="$any(form.get('codigo'))"
+                    />
+                    <app-input-text
+                        label="Nombre"
+                        [formControlInput]="$any(form.get('nombre'))"
+                    />
+                    <app-dropdown
+                        optionLabel="label"
+                        optionValue="value"
+                        label="Tipo"
+                        [options]="tipoProveedor"
+                        [formControlInput]="$any(form.get('tipo'))"
+                    />
+                    <app-text-area
+                        class="col-span-1 sm:col-span-2 md:col-span-3"
+                        label="Descripcion"
+                        [rows]="3"
+                        [formControlInput]="$any(form.get('descripcion'))"
+                    />
+
+                    <app-dropdown
+                        optionLabel="label"
+                        optionValue="value"
+                        label="Estado"
+                        [options]="estadosProveedor"
+                        [formControlInput]="$any(form.get('estado'))"
+                    />
+                    <app-input-text
+                        label="Nit"
+                        [formControlInput]="$any(form.get('nit'))"
+                    />
+                    <app-input-text
+                        label="Razón Social"
+                        [formControlInput]="$any(form.get('razonSocial'))"
+                    />
+                    <app-input-text
+                        label="Dirección"
+                        [formControlInput]="$any(form.get('direccion'))"
+                    />
+                    <app-input-text
+                        label="Ciudad"
+                        [formControlInput]="$any(form.get('ciudad'))"
+                    />
+                    <app-input-text
+                        label="Departamento"
+                        [formControlInput]="$any(form.get('departamento'))"
+                    />
+                    <app-input-text
+                        label="Teléfono"
+                        [formControlInput]="$any(form.get('telefono'))"
+                    />
+                    <app-input-text
+                        label="Email"
+                        [formControlInput]="$any(form.get('email'))"
+                    />
+                    <app-input-text
+                        label="Sitio Web"
+                        [formControlInput]="$any(form.get('sitioWeb'))"
+                    />
+                    <app-input-text
+                        label="Contacto Principal"
+                        [formControlInput]="$any(form.get('contactoPrincipal'))"
+                    />
+                    <app-input-text
+                        label="Teléfono de Contacto"
+                        [formControlInput]="$any(form.get('telefonoContacto'))"
+                    />
+                    <app-input-text
+                        label="Email de Contacto"
+                        [formControlInput]="$any(form.get('emailContacto'))"
+                    />
+                    <app-text-area
+                        class="col-span-1 sm:col-span-2 md:col-span-3"
+                        label="Notas"
+                        [rows]="3"
+                        [formControlInput]="$any(form.get('notas'))"
+                    />
+                    <app-select-button
+                        label="Activo"
+                        [allowEmpty]="false"
+                        optionLabel="label"
+                        optionValue="value"
+                        [options]="stateOptions"
+                        [formControlInput]="$any(form.get('is_active'))"
+                    />
+                </div>
+            </div>
+            <div class="mt-4 flex justify-end gap-4">
                 <app-button
-                    label="Eliminar"
-                    icon="pi pi-trash"
-                    class="p-button-outlined"
-                    [severity]="'danger'"
-                    (clicked)="onDelete()"
+                    label="Cancelar"
+                    icon="pi pi-times"
+                    [severity]="'secondary'"
+                    [raised]="true"
+                    (clicked)="onCancel()"
                 />
-            }
-        </div>
-        <div class="card">
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2">
-                <app-input-text
-                    label="Código"
-                    [formControlInput]="$any(form.get('codigo'))"
-                />
-                <app-input-text
-                    label="Nombre"
-                    [formControlInput]="$any(form.get('nombre'))"
-                />
-                <app-input-text
-                    label="Descripcion"
-                    [formControlInput]="$any(form.get('descripcion'))"
-                />
-                <app-dropdown
-                    optionLabel="label"
-                    optionValue="value"
-                    label="Tipo"
-                    [options]="tipoProveedor"
-                    [formControlInput]="$any(form.get('tipo'))"
-                />
-                <app-dropdown
-                    optionLabel="label"
-                    optionValue="value"
-                    label="Estado"
-                    [options]="estadosProveedor"
-                    [formControlInput]="$any(form.get('estado'))"
-                />
-                <app-input-text
-                    label="Nit"
-                    [formControlInput]="$any(form.get('nit'))"
-                />
-                <app-input-text
-                    label="Razón Social"
-                    [formControlInput]="$any(form.get('razonSocial'))"
-                />
-                <app-input-text
-                    label="Dirección"
-                    [formControlInput]="$any(form.get('direccion'))"
-                />
-                <app-input-text
-                    label="Ciudad"
-                    [formControlInput]="$any(form.get('ciudad'))"
-                />
-                <app-input-text
-                    label="Departamento"
-                    [formControlInput]="$any(form.get('departamento'))"
-                />
-                <app-input-text
-                    label="Teléfono"
-                    [formControlInput]="$any(form.get('telefono'))"
-                />
-                <app-input-text
-                    label="Email"
-                    [formControlInput]="$any(form.get('email'))"
-                />
-                <app-input-text
-                    label="Sitio Web"
-                    [formControlInput]="$any(form.get('sitioWeb'))"
-                />
-                <app-input-text
-                    label="Contacto Principal"
-                    [formControlInput]="$any(form.get('contactoPrincipal'))"
-                />
-                <app-input-text
-                    label="Teléfono de Contacto"
-                    [formControlInput]="$any(form.get('telefonoContacto'))"
-                />
-                <app-input-text
-                    label="Email de Contacto"
-                    [formControlInput]="$any(form.get('emailContacto'))"
-                />
-                <app-input-text
-                    label="Notas"
-                    [formControlInput]="$any(form.get('notas'))"
-                />
-                <app-select-button
-                    label="Activo"
-                    [allowEmpty]="false"
-                    optionLabel="label"
-                    optionValue="value"
-                    [options]="stateOptions"
-                    [formControlInput]="$any(form.get('is_active'))"
+                <app-button
+                    label="Guardar"
+                    icon="pi pi-check            
+            "
+                    (clicked)="onSave()"
                 />
             </div>
+            <!-- form value: {{ form.value | json }} -->
         </div>
-        <div class="mt-4 flex justify-end gap-4">
-            <app-button
-                label="Cancelar"
-                icon="pi pi-times"
-                [severity]="'secondary'"
-                [raised]="true"
-                (clicked)="onCancel()"
-            />
-            <app-button
-                label="Guardar"
-                icon="pi pi-check            
-            "
-                (clicked)="onSave()"
-            />
-        </div>
-        <!-- form value: {{ form.value | json }} -->
     `,
     styles: [],
     imports: [
@@ -153,6 +163,7 @@ import { ProveedoresService } from '../../services/proveedores.service';
         DropdownComponent,
         SelectButtonComponent,
         RouterModule,
+        TextAreaComponent,
     ],
     providers: [ToastService],
 })
@@ -297,17 +308,17 @@ export class ProveedoresAddComponent implements OnInit {
             tipo: ['', [Validators.required]],
             estado: ['', [Validators.required]],
             nit: ['', [Validators.required]],
-            razonSocial: ['', []],
-            direccion: ['', []],
-            ciudad: ['', []],
-            departamento: ['', []],
-            telefono: ['', []],
-            email: ['', []],
-            sitioWeb: ['', []],
-            contactoPrincipal: ['', []],
-            telefonoContacto: ['', []],
-            emailContacto: ['', []],
-            notas: ['', []],
+            razonSocial: [null, []],
+            direccion: [null, []],
+            ciudad: [null, []],
+            departamento: [null, []],
+            telefono: [null, []],
+            email: [null, []],
+            sitioWeb: [null, []],
+            contactoPrincipal: [null, []],
+            telefonoContacto: [null, []],
+            emailContacto: [null, []],
+            notas: [null, []],
             is_active: [true, [Validators.required]],
         });
     }

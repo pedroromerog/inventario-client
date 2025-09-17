@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DatePicker, DatePickerModule } from 'primeng/datepicker';
 import { InputErrorsComponent } from '../input-errors/input-errors.component';
 
@@ -37,6 +37,7 @@ export class InputCalendarComponent implements OnInit {
     @Input() showError = true;
     visible = true;
     changetype = false;
+    requiredValidator = Validators.required;
 
     ngOnInit(): void {
         // Initialize default values if necessary

@@ -1,13 +1,13 @@
 import { ButtonComponent } from '@/shared/components/ui/button/button.component';
+import { ToastService } from '@/shared/services/toast.service';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { ConfirmationService } from 'primeng/api';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { Proveedor } from '../../interfaces/proveedor.interface';
 import { ProveedoresService } from '../../services/proveedores.service';
-import { ToastService } from '@/shared/services/toast.service';
-import { ConfirmationService } from 'primeng/api';
 
 @Component({
     selector: 'app-proveedores-list',
@@ -95,13 +95,17 @@ import { ConfirmationService } from 'primeng/api';
                                 </td>
                                 <td class="flex justify-center space-x-2">
                                     <app-button
+                                        [text]="true"
+                                        [rounded]="true"
+                                        severity="warn"
                                         icon="pi pi-pencil"
-                                        class="p-button-rounded p-button-text p-button-info"
                                         routerLink="edit/{{ proveedor.id }}"
                                     ></app-button>
                                     <app-button
+                                        [text]="true"
+                                        [rounded]="true"
+                                        severity="danger"
                                         icon="pi pi-trash"
-                                        class="p-button-rounded p-button-text p-button-danger"
                                         (clicked)="onDelete(proveedor.id)"
                                     ></app-button>
                                 </td>
@@ -147,13 +151,17 @@ import { ConfirmationService } from 'primeng/api';
                         </div>
                         <div class="flex justify-end mt-4 space-x-2">
                             <app-button
+                                [text]="true"
+                                [rounded]="true"
+                                severity="warn"
                                 icon="pi pi-pencil"
-                                class="p-button-sm p-button-rounded p-button-text p-button-info"
                                 routerLink="edit/{{ proveedor.id }}"
                             ></app-button>
                             <app-button
+                                [text]="true"
+                                [rounded]="true"
+                                severity="danger"
                                 icon="pi pi-trash"
-                                class="p-button-sm p-button-rounded p-button-text p-button-danger"
                                 (clicked)="onDelete(proveedor.id)"
                             ></app-button>
                         </div>
