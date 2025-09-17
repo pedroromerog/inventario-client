@@ -35,7 +35,9 @@ export class InputNumberComponent implements OnInit {
     @Input() minLength!: number;
     @Input() textColor: 'white' | '' = '';
     @Input() showError = true;
-    @Input() mode = '';
+    @Input() mode!: InputNumber['mode'];
+    @Input() maxFractionDigits!: InputNumber['maxFractionDigits'];
+    @Input() minFractionDigits!: InputNumber['minFractionDigits'];
     visible = true;
 
     requiredValidator = Validators.required;

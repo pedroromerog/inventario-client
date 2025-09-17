@@ -28,6 +28,11 @@
         styleClass="custom-dropdown {{ styleClass }} w-full"
         (onChange)="onSelectionChange($event)"
     >
+        <ng-template #selectedItem let-selectedOption>
+            <div class="flex items-center gap-2" *ngIf="selectedOption">
+                <div>{{ selectedOption[optionLabel] }}</div>
+            </div>
+        </ng-template>
         <ng-template let-opcion pTemplate="item">
             <div style="white-space: normal; word-break: break-word">
                 {{ opcion[optionLabel] }}

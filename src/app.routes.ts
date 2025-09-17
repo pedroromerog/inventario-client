@@ -14,10 +14,16 @@ export const appRoutes: Routes = [
                     import('./app/pages/proveedores/proveedores.routes'),
             },
             {
+                path: 'productos',
+                loadChildren: () =>
+                    import('./app/pages/productos/productos.routes'),
+            },
+
+            {
                 path: 'movimientos',
                 loadChildren: () =>
                     import(
-                        './app/pages/movimientos-inventario/movientos.routes'
+                        './app/pages/movimientos-inventario/movimientos.routes'
                     ),
             },
         ],
