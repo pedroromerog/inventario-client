@@ -76,7 +76,6 @@ import { UsuariosService } from '../../services/usuarios.service';
                     <app-input-password
                         label="Contraseña"
                         [formControlInput]="$any(form.get('password'))"
-                        
                     />
                     <div class="flex items-center">
                         <app-checkbox
@@ -104,11 +103,21 @@ import { UsuariosService } from '../../services/usuarios.service';
                         label="Cargo"
                         [formControlInput]="$any(form.get('cargo'))"
                     />
-                    <!-- <app-input-calendar
-                        label="Último Acceso"
-                        [formControlInput]="$any(form.get('ultimoAcceso'))"
-                        [readonlyInput]="true"
-                    /> -->
+                    @if (usuarioId) {
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-1"
+                                >último Acceso</label
+                            >
+                            <p
+                                class="w-full border border-gray-300 rounded-md p-2 bg-gray-100"
+                            >
+                                {{
+                                    form.get('ultimoAcceso')?.value
+                                        | date: 'medium'
+                                }}
+                            </p>
+                        </div>
+                    }
                 </div>
 
                 <app-text-area
@@ -143,7 +152,7 @@ import { UsuariosService } from '../../services/usuarios.service';
         InputPasswordomponent,
     ],
     standalone: true,
-    providers: [ToastService, ConfirmationService],
+    providers: [ToastService],
 })
 export class UsuariosAddComponent implements OnInit {
     form: FormGroup;
@@ -194,7 +203,7 @@ export class UsuariosAddComponent implements OnInit {
     loadRoles() {
         this.rolesService.getAll().subscribe({
             next: (res) => {
-                const [roles, cant] = res
+                const [roles, cant] = res;
                 this.roles = roles;
             },
             error: (err) => {
@@ -265,6 +274,12 @@ export class UsuariosAddComponent implements OnInit {
 
     update() {
         if (!this.usuarioId) return;
+        const value = this.form.value;
+        delete value.password; // Elimina el campo password si está vacío
+        delete value.requiereCambioPassword; // Elimina el campo requiereCambioPassword si está vacío
+        delete value.isActive; // Elimina el campo isActive si está vacío
+        delete value.ultimoAcceso; // Elimina el campo ultimoAcceso si está vacío
+
         this.usuariosService.update(this.usuarioId, this.form.value).subscribe({
             next: () => {
                 this.toastService.updateSuccess();
