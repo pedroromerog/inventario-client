@@ -35,6 +35,22 @@ export const menu: { [x: string]: MenuItem[] } = {
                     ],
                 },
                 {
+                    label: 'Empleados',
+                    icon: 'pi pi-fw pi-users',
+                    items: [
+                        {
+                            label: 'Empleados',
+                            icon: 'pi pi-fw pi-users',
+                            routerLink: '/empleados',
+                        },
+                        {
+                            label: 'Crear Empleado',
+                            icon: 'pi pi-fw pi-plus',
+                            routerLink: '/empleados/add',
+                        },
+                    ],
+                },
+                {
                     label: 'Productos',
                     icon: 'pi pi-fw pi-box',
                     items: [

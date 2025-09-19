@@ -19,6 +19,11 @@ export const appRoutes: Routes = [
                     import('./app/pages/productos/productos.routes'),
             },
             {
+                path: 'empleados',
+                loadChildren: () =>
+                    import('./app/pages/empleados/empleados.routes'),
+            },
+            {
                 path: 'categorias',
                 loadChildren: () =>
                     import('./app/pages/categorias/categorias.routes'),
