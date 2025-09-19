@@ -64,6 +64,11 @@ export const menu: { [x: string]: MenuItem[] } = {
                             icon: 'pi pi-fw pi-plus',
                             routerLink: '/productos/add',
                         },
+                        {
+                            label: 'Stock Productos',
+                            icon: 'pi pi-fw pi-chart-bar',
+                            routerLink: '/stock',
+                        },
                     ],
                 },
                 {
