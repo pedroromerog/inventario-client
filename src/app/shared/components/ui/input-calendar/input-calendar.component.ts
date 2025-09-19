@@ -21,6 +21,7 @@ export class InputCalendarComponent implements OnInit {
     @Input() label = '';
     @Input() inputId = '';
     @Input() class = '';
+    @Input() readonlyInput = false;
     @Input() labelClass = '';
     @Input() value!: string | number | Date;
     @Input() placeholder = 'Seleccione una fecha';

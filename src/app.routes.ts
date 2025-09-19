@@ -28,6 +28,11 @@ export const appRoutes: Routes = [
                     import('./app/pages/empleados/empleados.routes'),
             },
             {
+                path: 'usuarios',
+                loadChildren: () =>
+                    import('./app/pages/usuarios/usuarios.routes'),
+            },
+            {
                 path: 'categorias',
                 loadChildren: () =>
                     import('./app/pages/categorias/categorias.routes'),

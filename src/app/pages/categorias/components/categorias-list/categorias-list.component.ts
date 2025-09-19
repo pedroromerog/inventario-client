@@ -19,7 +19,7 @@ import { ButtonViewComponent } from '@/shared/components/ui/button-view/button-v
         <div class="p-6">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-bold text-gray-800">
-                    Lista de Categorías 📚
+                    Lista de Categorías
                 </h2>
                 <app-button
                     label="Nueva Categoría"

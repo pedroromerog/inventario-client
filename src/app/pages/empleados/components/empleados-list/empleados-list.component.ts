@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
         <div class="p-6">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-bold text-gray-800">
-                    Lista de Empleados 🧑‍💼
+                    Lista de Empleados
                 </h2>
                 <app-button
                     label="Nuevo Empleado"

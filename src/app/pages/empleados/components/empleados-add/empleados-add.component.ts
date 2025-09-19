@@ -25,7 +25,7 @@ import { EmpleadosService } from '../../services/empleados.service';
     template: `
         <div class="bg-white shadow-lg rounded-xl p-6 md:p-8 max-w-4xl mx-auto">
             <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">
-                {{ empleadoId ? 'Actualizar ' : 'Crear Nuevo' }} Empleado 🧑‍💼
+                {{ empleadoId ? 'Actualizar ' : 'Crear Nuevo' }} Empleado
             </h2>
 
             <form [formGroup]="form" class="space-y-6">

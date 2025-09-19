@@ -19,7 +19,7 @@ import { ButtonEditComponent } from '@/shared/components/ui/button-edit/button-e
         <div class="p-6">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-bold text-gray-800">
-                    Lista de Productos 📦
+                    Lista de Productos
                 </h2>
                 <app-button
                     label="Nuevo Producto"

@@ -168,7 +168,7 @@ import { MovimientosService } from '../../services/movimientos.service';
                     />
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label
                             for="solicitante"
@@ -196,15 +196,15 @@ import { MovimientosService } from '../../services/movimientos.service';
                             class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                         />
                     </div>
-                </div>
+                </div> -->
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-                    <div>
+                    <!-- <div>
                         <app-input-text
                             label="URL de Evidencia"
                             [formControlInput]="$any(form.get('evidenciaUrl'))"
                         />
-                    </div>
+                    </div> -->
 
                     <!-- <div class="flex items-center space-x-2">
                         <input

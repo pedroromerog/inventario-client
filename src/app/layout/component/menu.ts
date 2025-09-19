@@ -80,6 +80,11 @@ export const menu: { [x: string]: MenuItem[] } = {
                             icon: 'pi pi-fw pi-list',
                             routerLink: '/movimientos',
                         },
+                        {
+                            label: 'Crear Movimiento',
+                            icon: 'pi pi-fw pi-plus',
+                            routerLink: '/movimientos/add',
+                        },
                     ],
                 },
                 {

@@ -139,7 +139,7 @@ import { ButtonCancelComponent } from '@/shared/components/ui/button-cancel/butt
             <div class="mt-4 flex justify-end gap-4">
                 <app-button-cancel (clicked)="onCancel()" />
                 <app-button
-                    label="Guardar"
+                    label="{{ proveedorId ? 'Actualizar' : 'Crear' }} Proveedor"
                     icon="pi pi-check            
             "
                     (clicked)="onSave()"

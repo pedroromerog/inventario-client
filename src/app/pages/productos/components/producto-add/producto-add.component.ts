@@ -33,7 +33,7 @@ import { ButtonCancelComponent } from '@/shared/components/ui/button-cancel/butt
     template: `
         <div class="bg-white shadow-lg rounded-xl p-6 md:p-8 max-w-4xl mx-auto">
             <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">
-                {{ productoId ? 'Actualizar ' : 'Crear Nuevo' }} Producto 📦
+                {{ productoId ? 'Actualizar ' : 'Crear Nuevo' }} Producto
             </h2>
 
             <form [formGroup]="form" class="space-y-6">

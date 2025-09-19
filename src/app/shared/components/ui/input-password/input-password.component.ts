@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { InputErrorsComponent } from '../input-errors/input-errors.component';
 
@@ -36,6 +36,7 @@ export class InputPasswordomponent implements OnInit {
     @Input() disabled = false;
     visible = true;
     changetype = false;
+    requiredValidator = Validators.required;
 
     viewpass() {
         this.visible = !this.visible;

@@ -30,7 +30,7 @@ import { AuthService } from './auth.service';
     ],
     providers: [ToastService, MessageService],
     template: `
-        <app-floating-configurator />
+        <!-- <app-floating-configurator /> -->
         <div
             class="bg-surface-50 dark:bg-surface-950 flex items-center justify-center min-h-screen min-w-screen overflow-hidden"
         >
@@ -116,7 +116,7 @@ import { AuthService } from './auth.service';
                                 [feedback]="false"
                             ></p-password>
 
-                            <div
+                            <!-- <div
                                 class="flex items-center justify-between mt-2 mb-8 gap-8"
                             >
                                 <div class="flex items-center">
@@ -132,7 +132,7 @@ import { AuthService } from './auth.service';
                                     class="font-medium no-underline ml-2 text-right cursor-pointer text-primary"
                                     >Olvidé mi contraseña?</span
                                 >
-                            </div>
+                            </div> -->
                             <p-button
                                 label="Iniciar Sesión"
                                 (click)="onLogin()"
