@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { ChangePasswordDto } from './interfaces/change-password.interface';
 import { Usuario } from '../usuarios/interfaces/usuario.interface';
 
 @Injectable({ providedIn: 'root' })
@@ -57,6 +58,19 @@ export class AuthService {
         return this.http.post(
             `${this.api}/auth/logout`,
             {},
+            {
+                withCredentials: true,
+            },
+        );
+    }
+
+    /**
+     * Cambiar la contraseña del usuario actual
+     */
+    changePassword(data: ChangePasswordDto) {
+        return this.http.post(
+            `${this.api}/auth/change-password`,
+            data,
             {
                 withCredentials: true,
             },

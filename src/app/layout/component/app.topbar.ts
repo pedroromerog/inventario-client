@@ -3,7 +3,6 @@ import { MenuItem } from 'primeng/api';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { StyleClassModule } from 'primeng/styleclass';
-import { AppConfigurator } from './app.configurator';
 import { LayoutService } from '../service/layout.service';
 import { AuthService } from '@/pages/auth/auth.service';
 import { PopoverModule } from 'primeng/popover';
@@ -15,7 +14,6 @@ import { PopoverModule } from 'primeng/popover';
         RouterModule,
         CommonModule,
         StyleClassModule,
-        AppConfigurator,
         PopoverModule,
     ],
     template: ` <div class="layout-topbar">
@@ -128,10 +126,16 @@ import { PopoverModule } from 'primeng/popover';
             </div>
 
             <p-popover #op>
-                <div class="flex flex-col gap-4 w-[10rem]">
+                <div class="flex flex-col gap-4 w-[12rem]">
                     <div class="">
-                        <button type="button" class="cursor-pointer" (click)="logout()">
-                            <i class="pi pi-logout"></i>
+                        <button type="button" class="cursor-pointer w-full text-left p-2 hover:bg-gray-100 rounded" (click)="goToChangePassword()">
+                            <i class="pi pi-key mr-2"></i>
+                            <span>Cambiar Contraseña</span>
+                        </button>
+                    </div>
+                    <div class="">
+                        <button type="button" class="cursor-pointer w-full text-left p-2 hover:bg-gray-100 rounded" (click)="logout()">
+                            <i class="pi pi-logout mr-2"></i>
                             <span>Salir</span>
                         </button>
                     </div>
@@ -154,6 +158,10 @@ export class AppTopbar {
             console.log('Logged out', res);
             this.router.navigate(['/auth/login']);
         });
+    }
+
+    goToChangePassword() {
+        this.router.navigate(['/auth/change-password']);
     }
 
     toggleDarkMode() {
