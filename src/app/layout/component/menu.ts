@@ -1,7 +1,7 @@
 import { Roles } from '@/shared/enums/roles.enum';
 import { MenuItem } from 'primeng/api';
 
-export const menu: { [x: string]: MenuItem[] } = {
+export const menu: { [x: number]: MenuItem[] } = {
     [Roles.ADMIN]: [
         {
             label: 'Dashboard',

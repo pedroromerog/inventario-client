@@ -167,7 +167,6 @@ export class Login {
             .pipe(take(1))
             .subscribe({
                 next: (response: any) => {
-                    console.log('Login successful', response);
                     this.router.navigate(['/']);
                     // Handle successful login, e.g., navigate to dashboard
                     this.authService.setUser(response.user);

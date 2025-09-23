@@ -29,7 +29,7 @@ export class AppMenu {
 
     ngOnInit() {
         const id = this.authService.getRolId();
-        const rolId = id ? id.toString() : '2'; // 2 empleado
+        const rolId = id ? id : 2; // 2 empleado
         this.model = menu[rolId];
     }
 }

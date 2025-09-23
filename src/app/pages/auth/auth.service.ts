@@ -7,25 +7,25 @@ import { Usuario } from '../usuarios/interfaces/usuario.interface';
 export class AuthService {
     api = environment.api;
     http = inject(HttpClient);
-    localStorage = '--';
+    userLabel = '--';
 
     constructor() {}
 
     setUser(user: Usuario) {
-        localStorage.setItem(this.localStorage, atob(JSON.stringify(user)));
+        localStorage.setItem(this.userLabel, btoa(JSON.stringify(user)));
     }
 
     clearUser() {
-        localStorage.removeItem(this.localStorage);
+        localStorage.removeItem(this.userLabel);
     }
 
     getRolId(): number | null {
         const user = this.getUser();
-        return user ? user.rolId : null;
+        return user ? user.rol.id : null;
     }
 
     getUser(): Usuario | null {
-        const user = localStorage.getItem(this.localStorage);
+        const user = localStorage.getItem(this.userLabel);
         if (user) {
             return JSON.parse(atob(user)) as Usuario;
         }
