@@ -22,18 +22,18 @@ import {
     ReactiveFormsModule,
     Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { MovimientosService } from '../../services/movimientos.service';
 
 @Component({
-    selector: 'app-movimientos-add',
+    selector: 'app-movimientos-edit',
     template: `
         <div
             class="bg-white shadow-lg rounded-xl p-6 md:p-8 max-w-4xl mx-auto "
         >
             <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">
-                Crear Nuevo Movimiento
+                Editar Movimiento
             </h2>
 
             <form [formGroup]="form" class="space-y-6">
@@ -88,7 +88,7 @@ import { MovimientosService } from '../../services/movimientos.service';
                             label="Producto"
                             [filter]="true"
                             [formControlInput]="$any(form.get('productoId'))"
-                            [options]="prodcutos"
+                            [options]="productos"
                         />
                     </div>
 
@@ -174,69 +174,26 @@ import { MovimientosService } from '../../services/movimientos.service';
                     />
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label
-                            for="solicitante"
-                            class="block text-sm font-medium text-gray-700"
-                            >Solicitante</label
-                        >
-                        <input
-                            id="solicitante"
-                            type="text"
-                            formControlName="solicitante"
-                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                        />
-                    </div>
-
-                    <!-- <div>
-                        <label
-                            for="autorizadorId"
-                            class="block text-sm font-medium text-gray-700"
-                            >ID del Autorizador</label
-                        >
-                        <input
-                            id="autorizadorId"
-                            type="text"
-                            formControlName="autorizadorId"
-                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                        />
-                    </div> -->
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-                    <!-- <div>
-                        <app-input-text
-                            label="URL de Evidencia"
-                            [formControlInput]="$any(form.get('evidenciaUrl'))"
-                        />
-                    </div> -->
-
-                    <!-- <div class="flex items-center space-x-2">
-                        <input
-                            id="is_active"
-                            type="checkbox"
-                            formControlName="is_active"
-                            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                        />
-                        <label
-                            for="is_active"
-                            class="text-sm font-medium text-gray-700"
-                            >¿Está activo?</label
-                        >
-                    </div> -->
-                </div>
-
-                <div class="pt-6">
+                <div class="pt-6 flex gap-4">
                     <button
                         pButton
                         type="submit"
                         [disabled]="form.invalid"
                         (click)="onSubmit()"
                         [loading]="loading"
-                        class="w-full py-3 px-4 bg-blue-600 text-white font-semibold rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                        class="flex-1 py-3 px-4 bg-blue-600 text-white font-semibold rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        Crear Movimiento
+                        Actualizar Movimiento
+                    </button>
+
+                    <button
+                        pButton
+                        type="button"
+                        (click)="onCancel()"
+                        [disabled]="loading"
+                        class="flex-1 py-3 px-4 bg-gray-500 text-white font-semibold rounded-md shadow-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        Cancelar
                     </button>
                 </div>
             </form>
@@ -255,14 +212,16 @@ import { MovimientosService } from '../../services/movimientos.service';
     ],
     providers: [ToastService],
 })
-export class MovimientosAddComponent implements OnInit {
-    @Output() movimientoGuardado = new EventEmitter<any>();
+export class MovimientosEditComponent implements OnInit {
+    @Output() movimientoActualizado = new EventEmitter<any>();
 
     form: FormGroup;
+    movimientoId: number | null = null;
 
     bodegas: Bodega[] = [];
-    prodcutos: Producto[] = [];
+    productos: Producto[] = [];
     loading = false;
+
     // Enums para el formulario
     tipoMovimiento = TipoMovimiento;
     estadoMovimiento = EstadoMovimiento;
@@ -278,6 +237,7 @@ export class MovimientosAddComponent implements OnInit {
         private bodegaService: BodegasService,
         private productosService: ProductosService,
         private router: Router,
+        private route: ActivatedRoute,
         private toastService: ToastService,
         private movimientoService: MovimientosService,
         private authService: AuthService,
@@ -304,7 +264,6 @@ export class MovimientosAddComponent implements OnInit {
             solicitante: [null],
             autorizadorId: [null],
             evidenciaUrl: [null],
-            // is_active: [true],
         });
 
         //Transformar a mayusculas el codigo y referencia
@@ -320,12 +279,52 @@ export class MovimientosAddComponent implements OnInit {
     ngOnInit(): void {
         this.getBodegas();
         this.getProductos();
+        this.getMovimientoId();
+    }
+
+    private getMovimientoId(): void {
+        this.route.params.subscribe((params) => {
+            this.movimientoId = params['id'] ? +params['id'] : null;
+            if (this.movimientoId) {
+                this.cargarMovimiento();
+            }
+        });
+    }
+
+    private cargarMovimiento(): void {
+        if (this.movimientoId) {
+            this.loading = true;
+            this.movimientoService.getById(this.movimientoId).subscribe({
+                next: (res) => {
+                    this.form.patchValue({
+                        ...res,
+                        cantidad: parseFloat(res.cantidad.toString()),
+                        precioUnitario: res.precioUnitario
+                            ? parseFloat(res.precioUnitario.toString())
+                            : null,
+                        precioTotal: res.precioTotal
+                            ? parseFloat(res.precioTotal.toString())
+                            : null,
+                        fechaMovimiento: new Date(res.fechaMovimiento),
+                    });
+                    this.loading = false;
+                },
+                error: (error) => {
+                    console.error('Error al cargar el movimiento', error);
+                    this.toastService.listError(
+                        error.error?.message || 'Error al cargar el movimiento',
+                    );
+                    this.loading = false;
+                    this.router.navigate(['/movimientos']);
+                },
+            });
+        }
     }
 
     getProductos() {
         this.productosService.getAll().subscribe({
             next: (res) => {
-                this.prodcutos = res;
+                this.productos = res;
             },
             error: (error) => {
                 this.toastService.listError(
@@ -351,27 +350,34 @@ export class MovimientosAddComponent implements OnInit {
 
     onSubmit(): void {
         this.loading = true;
-        if (this.form.valid) {
+        if (this.form.valid && this.movimientoId) {
             const value = this.form.value;
-            this.movimientoService.create(value).subscribe({
+            console.log('Datos del formulario:', value);
+            this.movimientoService.update(this.movimientoId, value).subscribe({
                 next: (res) => {
-                    this.toastService.createSuccess();
+                    this.toastService.updateSuccess();
                     this.router.navigate(['/movimientos']);
                     this.loading = false;
                 },
                 error: (error) => {
-                    console.error('Error al crear el movimiento', error);
-                    this.toastService.createError(
+                    console.error('Error al actualizar el movimiento', error);
+                    this.toastService.updateError(
                         error.error?.message || undefined,
                     );
                     this.loading = false;
                 },
             });
         } else {
-            console.error('El formulario no es válido');
+            console.error(
+                'El formulario no es válido o falta el ID del movimiento',
+            );
             this.form.markAllAsTouched();
             this.loading = false;
         }
+    }
+
+    onCancel(): void {
+        this.router.navigate(['/movimientos']);
     }
 
     // Helper para verificar si un campo es inválido y fue tocado

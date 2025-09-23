@@ -179,7 +179,7 @@ export class MovimientosListComponent implements OnInit {
 
     onDelete(id: number) {
         this.confirmationService.confirm({
-            message: '¿Está seguro de eliminar este proveedor?',
+            message: '¿Está seguro de eliminar este movimiento?',
             header: 'Confirmar',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
