@@ -1,3 +1,4 @@
+import { AuthService } from '@/pages/auth/auth.service';
 import { ButtonCancelComponent } from '@/shared/components/ui/button-cancel/button-cancel.component';
 import { ButtonComponent } from '@/shared/components/ui/button/button.component';
 import { CheckboxComponent } from '@/shared/components/ui/checkbox/checkbox.component';
@@ -62,11 +63,11 @@ import { UsuariosService } from '../../services/usuarios.service';
                         optionLabel="nombre"
                         optionValue="id"
                     />
-                    <app-dropdown
+                    <!-- <app-dropdown
                         label="Estado"
                         [formControlInput]="$any(form.get('estado'))"
                         [options]="estados"
-                    />
+                    /> -->
                 </div>
 
                 <div
@@ -77,13 +78,17 @@ import { UsuariosService } from '../../services/usuarios.service';
                         label="Contraseña"
                         [formControlInput]="$any(form.get('password'))"
                     />
+                    <app-input-password
+                        label="Confirmar Contraseña"
+                        [formControlInput]="$any(form.get('confirmPassword'))"
+                    />
                     <div class="flex items-center">
-                        <app-checkbox
+                        <!-- <app-checkbox
                             label="Requiere cambio de contraseña"
                             [formControlInput]="
                                 $any(form.get('requiereCambioPassword'))
                             "
-                        />
+                        /> -->
                     </div>
                 </div>
 
@@ -120,11 +125,11 @@ import { UsuariosService } from '../../services/usuarios.service';
                     }
                 </div>
 
-                <app-text-area
+                <!-- <app-text-area
                     label="Notas"
                     [rows]="3"
                     [formControlInput]="$any(form.get('notas'))"
-                />
+                /> -->
 
                 <div class="pt-6 flex justify-end space-x-4">
                     <app-button-cancel (clicked)="onCancel()" />
@@ -163,6 +168,7 @@ export class UsuariosAddComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private usuariosService: UsuariosService,
+        private authService: AuthService,
         private rolesService: RolesService,
         private router: Router,
         private route: ActivatedRoute,
@@ -173,16 +179,17 @@ export class UsuariosAddComponent implements OnInit {
             username: ['', Validators.required],
             nombre: ['', Validators.required],
             apellido: ['', Validators.required],
-            email: ['', [Validators.required, Validators.email]],
-            password: [''],
-            estado: [EstadoUsuario.ACTIVO, Validators.required],
+            email: [null, [Validators.required, Validators.email]],
+            password: [null, []],
+            confirmPassword: [null, []],
+            // estado: [EstadoUsuario.ACTIVO, Validators.required],
             rolId: [null, Validators.required],
             telefono: [''],
             departamento: [''],
             cargo: [''],
-            notas: [''],
+            // notas: [''],
             ultimoAcceso: [null],
-            requiereCambioPassword: [true],
+            // requiereCambioPassword: [true],
             isActive: [true],
         });
     }
@@ -194,9 +201,15 @@ export class UsuariosAddComponent implements OnInit {
 
         if (this.usuarioId) {
             this.form.get('password')?.setValidators(null);
+            this.form.get('confirmPassword')?.setValidators(null);
             this.loadUserData();
         } else {
-            this.form.get('password')?.setValidators(Validators.required);
+            this.form
+                .get('password')
+                ?.setValidators([Validators.required, Validators.minLength(4)]); // La contraseña es obligatoria al crear un usuario
+            this.form
+                .get('confirmPassword')
+                ?.setValidators([Validators.required, Validators.minLength(4)]); // La contraseña es obligatoria al crear un usuario
         }
     }
 
@@ -260,7 +273,12 @@ export class UsuariosAddComponent implements OnInit {
     }
 
     create() {
-        this.usuariosService.create(this.form.value).subscribe({
+        const value = this.form.value;
+        delete value.ultimoAcceso; // Elimina el campo ultimoAcceso si está vacío
+        delete value.isActive; // Elimina el campo isActive si está vacío
+        delete value.requiereCambioPassword;
+
+        this.authService.register(value).subscribe({
             next: () => {
                 this.toastService.createSuccess();
                 this.router.navigate(['/usuarios']);

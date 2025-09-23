@@ -28,7 +28,7 @@ export class InputPasswordomponent implements OnInit {
     @Input() max!: number;
     @Input() min!: number;
     @Input() maxLength!: number;
-    @Input() minLength!: number;
+    @Input() minlength!: number;
     @Input() textColor: 'black' | '' = '';
     @Input() showError = true;
     @Input() readonly = false;
@@ -38,17 +38,7 @@ export class InputPasswordomponent implements OnInit {
     changetype = false;
     requiredValidator = Validators.required;
 
-    viewpass() {
-        this.visible = !this.visible;
-        this.changetype = !this.changetype;
-    }
-
-    ngOnInit() {
-        this.viewpass();
-        if (this.value) {
-            this.formControlInput.setValue(this.value);
-        }
-    }
+    ngOnInit() {}
 
     onInput(event: Event): void {
         if (this.uppercase) {

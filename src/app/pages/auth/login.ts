@@ -10,6 +10,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { RippleModule } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
+import { take } from 'rxjs';
 import { AppFloatingConfigurator } from '../../layout/component/app.floatingconfigurator';
 import { AuthService } from './auth.service';
 
@@ -136,6 +137,7 @@ import { AuthService } from './auth.service';
                             <p-button
                                 label="Iniciar Sesión"
                                 (click)="onLogin()"
+                                [loading]="loading"
                                 styleClass="w-full"
                             ></p-button>
                         </div>
@@ -150,6 +152,7 @@ export class Login {
     email: string = '';
     password: string = '';
     checked: boolean = false;
+    loading = false;
 
     constructor(
         private authService: AuthService,
@@ -158,16 +161,21 @@ export class Login {
     ) {}
 
     onLogin() {
+        this.loading = true;
         this.authService
             .login({ username: this.email, password: this.password })
+            .pipe(take(1))
             .subscribe({
                 next: (response: any) => {
                     console.log('Login successful', response);
                     this.router.navigate(['/']);
                     // Handle successful login, e.g., navigate to dashboard
+                    this.authService.setUser(response.user);
+                    this.loading = false;
                 },
                 error: (error: any) => {
                     console.error('Login failed', error);
+                    this.loading = false;
                     this.toastService.add({
                         severity: 'error',
                         summary: 'Error',

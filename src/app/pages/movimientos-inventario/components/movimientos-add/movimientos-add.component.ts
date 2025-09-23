@@ -1,3 +1,4 @@
+import { AuthService } from '@/pages/auth/auth.service';
 import { Bodega } from '@/pages/bodegas/interfaces/bodega.interface';
 import { BodegasService } from '@/pages/bodegas/services/bodegas.service';
 import { Producto } from '@/pages/productos/interfaces/producto.interface';
@@ -22,6 +23,7 @@ import {
     Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ButtonModule } from 'primeng/button';
 import { MovimientosService } from '../../services/movimientos.service';
 
 @Component({
@@ -39,6 +41,7 @@ import { MovimientosService } from '../../services/movimientos.service';
                     <div>
                         <app-input-text
                             label="Código"
+                            placeholder="MOV001"
                             [formControlInput]="$any(form.get('codigo'))"
                         />
                     </div>
@@ -140,6 +143,7 @@ import { MovimientosService } from '../../services/movimientos.service';
                     <div>
                         <app-input-text
                             label="Referencia"
+                            placeholder="REF-2024-001"
                             [formControlInput]="$any(form.get('referencia'))"
                         />
                     </div>
@@ -147,6 +151,7 @@ import { MovimientosService } from '../../services/movimientos.service';
                     <div>
                         <app-input-text
                             label="Número de Documento"
+                            placeholder="FAC-001"
                             [formControlInput]="
                                 $any(form.get('numeroDocumento'))
                             "
@@ -156,6 +161,7 @@ import { MovimientosService } from '../../services/movimientos.service';
                     <div>
                         <app-input-text
                             label="Tipo de Documento"
+                            placeholder="FAC-001"
                             [formControlInput]="$any(form.get('tipoDocumento'))"
                         />
                     </div>
@@ -223,9 +229,11 @@ import { MovimientosService } from '../../services/movimientos.service';
 
                 <div class="pt-6">
                     <button
+                        pButton
                         type="submit"
                         [disabled]="form.invalid"
                         (click)="onSubmit()"
+                        [loading]="loading"
                         class="w-full py-3 px-4 bg-blue-600 text-white font-semibold rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         Crear Movimiento
@@ -243,6 +251,7 @@ import { MovimientosService } from '../../services/movimientos.service';
         DropdownComponent,
         InputNumberComponent,
         TextAreaComponent,
+        ButtonModule,
     ],
     providers: [ToastService],
 })
@@ -253,7 +262,7 @@ export class MovimientosAddComponent implements OnInit {
 
     bodegas: Bodega[] = [];
     prodcutos: Producto[] = [];
-
+    loading = false;
     // Enums para el formulario
     tipoMovimiento = TipoMovimiento;
     estadoMovimiento = EstadoMovimiento;
@@ -271,6 +280,7 @@ export class MovimientosAddComponent implements OnInit {
         private router: Router,
         private toastService: ToastService,
         private movimientoService: MovimientosService,
+        private authService: AuthService,
     ) {
         this.form = this.fb.group({
             codigo: ['', Validators.required],
@@ -286,10 +296,7 @@ export class MovimientosAddComponent implements OnInit {
             cantidad: [0, [Validators.required, Validators.min(0.01)]],
             precioUnitario: [null],
             precioTotal: [null],
-            fechaMovimiento: [
-                new Date().toISOString().substring(0, 10),
-                Validators.required,
-            ],
+            fechaMovimiento: [new Date(), Validators.required],
             referencia: [null],
             numeroDocumento: [null],
             tipoDocumento: [null],
@@ -298,6 +305,15 @@ export class MovimientosAddComponent implements OnInit {
             autorizadorId: [null],
             evidenciaUrl: [null],
             // is_active: [true],
+        });
+
+        //Transformar a mayusculas el codigo y referencia
+        this.form.get('codigo')?.valueChanges.subscribe((value) => {
+            if (value) {
+                this.form.get('codigo')?.setValue(value.toUpperCase(), {
+                    emitEvent: false,
+                });
+            }
         });
     }
 
@@ -334,23 +350,29 @@ export class MovimientosAddComponent implements OnInit {
     }
 
     onSubmit(): void {
+        this.loading = true;
         if (this.form.valid) {
-            console.log('Datos del formulario:', this.form.value);
-            this.movimientoService.create(this.form.value).subscribe({
+            const value = this.form.value;
+            value.solicitante = this.authService.getUser()?.id;
+            console.log('Datos del formulario:', value);
+            this.movimientoService.create(value).subscribe({
                 next: (res) => {
                     this.toastService.createSuccess();
                     this.router.navigate(['/movimientos']);
+                    this.loading = false;
                 },
                 error: (error) => {
                     console.error('Error al crear el movimiento', error);
                     this.toastService.createError(
                         error.error?.message || undefined,
                     );
+                    this.loading = false;
                 },
             });
         } else {
             console.error('El formulario no es válido');
             this.form.markAllAsTouched();
+            this.loading = false;
         }
     }
 

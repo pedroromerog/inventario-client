@@ -121,29 +121,45 @@ export const menu: { [x: string]: MenuItem[] } = {
                 },
             ],
         },
-
-        {
-            label: 'Reportes',
-            icon: 'pi pi-fw pi-chart-bar',
-            routerLink: '/reportes',
-        },
     ],
     [Roles.EMPLEADO]: [
-        { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: '/' },
         {
-            label: 'Productos',
-            icon: 'pi pi-fw pi-box',
-            routerLink: '/productos',
-        },
-        {
-            label: 'Categorías',
-            icon: 'pi pi-fw pi-tags',
-            routerLink: '/categorias',
-        },
-        {
-            label: 'Ventas',
-            icon: 'pi pi-fw pi-shopping-cart',
-            routerLink: '/ventas',
+            label: 'Menu',
+            icon: 'pi pi-fw pi-home',
+            items: [
+                {
+                    label: 'Dashboard',
+                    icon: 'pi pi-fw pi-home',
+                    routerLink: '/',
+                },
+                {
+                    label: 'Productos',
+                    icon: 'pi pi-fw pi-box',
+                    items: [
+                        {
+                            label: 'Stock Productos',
+                            icon: 'pi pi-fw pi-chart-bar',
+                            routerLink: '/stock',
+                        },
+                    ],
+                },
+                {
+                    label: 'Inventario',
+                    icon: 'pi pi-fw pi-briefcase',
+                    items: [
+                        {
+                            label: 'Movimientos Inventario',
+                            icon: 'pi pi-fw pi-list',
+                            routerLink: '/movimientos',
+                        },
+                        {
+                            label: 'Crear Movimiento',
+                            icon: 'pi pi-fw pi-plus',
+                            routerLink: '/movimientos/add',
+                        },
+                    ],
+                },
+            ],
         },
     ],
 };

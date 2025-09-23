@@ -102,7 +102,7 @@ import { MovimientosService } from '../../services/movimientos.service';
                                 }}
                             </td>
                             <td class="flex justify-center space-x-2">
-                                <app-button-view />
+                                <!-- <app-button-view /> -->
                                 <app-button-edit
                                     [routerLink]="'edit/' + movimiento.id"
                                 />
@@ -150,7 +150,7 @@ import { MovimientosService } from '../../services/movimientos.service';
                         </p>
                     </div>
                     <div class="flex justify-end mt-4 space-x-2">
-                        <app-button-view />
+                        <!-- <app-button-view /> -->
                         <app-button-edit
                             [routerLink]="'edit/' + movimiento.id"
                         />
