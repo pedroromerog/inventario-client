@@ -81,7 +81,7 @@ import { ToastService } from '@/shared/services/toast.service';
                                 ></p-tag>
                             </td>
                             <td class="flex justify-center space-x-2">
-                                <app-button
+                                <!-- <app-button
                                     [text]="true"
                                     [rounded]="true"
                                     severity="info"
@@ -104,7 +104,7 @@ import { ToastService } from '@/shared/services/toast.service';
                                     icon="pi pi-trash"
                                     pTooltip="Eliminar"
                                     (clicked)="onDelete(stock.id)"
-                                ></app-button>
+                                ></app-button> -->
                             </td>
                         </tr>
                     </ng-template>
@@ -139,7 +139,7 @@ import { ToastService } from '@/shared/services/toast.service';
                         </p>
                     </div>
                     <div class="flex justify-end mt-4 space-x-2">
-                        <app-button
+                        <!-- <app-button
                             [text]="true"
                             [rounded]="true"
                             severity="info"
@@ -159,7 +159,7 @@ import { ToastService } from '@/shared/services/toast.service';
                             severity="danger"
                             icon="pi pi-trash"
                             (clicked)="onDelete(stock.id)"
-                        ></app-button>
+                        ></app-button> -->
                     </div>
                 </div>
             </div>
